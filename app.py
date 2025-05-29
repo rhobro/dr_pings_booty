@@ -5,10 +5,10 @@ import os
 app = Flask(__name__)
 
 @app.route("/test")
-def sup_gang():
+def test():
     return {
         "timestamp": now(),
-        "msg": "yup, you poked me"
+        "msg": "yes, your request reached me"
     }
 
 
