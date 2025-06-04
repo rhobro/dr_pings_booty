@@ -23,7 +23,9 @@ def time():
     inp = request.json
     start = coord_http_to_py(inp["start"])
     end = coord_http_to_py(inp["end"])
-    route = find([start, end])["route"][0]
+    
+    result = find([start, end], target_distance=1)    
+    route = result["routes"][0]
     
     return {
         "time": round(route["duration"] / 1000 / 60)
@@ -43,10 +45,30 @@ def longroute():
     total_time = inp["total_time"]
     AVERAGE_WALKING_SPEED = 4.8
     
-    return enrich_routes_with_location_info(
-        [start, end],
-        target_distance=AVERAGE_WALKING_SPEED*total_time/60
-    )
+    # Calculate target distance and ensure it's an integer
+    target_distance_meters = int(AVERAGE_WALKING_SPEED * (total_time / 60) * 1000)
+    
+    try:
+        enriched_data = enrich_routes_with_location_info(
+            [start, end],
+            target_distance=target_distance_meters,
+            green_preference=1.0,     
+            hills_preference=0.0,
+            avoid_unsafe=True,
+            avoid_unlit=True,
+            avoid_repetition=True,
+            roundtrip=False,
+            search_radius_m=50
+        )
+        
+        if enriched_data:
+            return enriched_data  # Return the enriched route data as JSON
+        else:
+            return {"error": "Could not generate route"}, 400
+            
+    except Exception as e:
+        print(f"Error in longroute: {e}")
+        return {"error": str(e)}, 500
 
 
 if __name__ == "__main__":

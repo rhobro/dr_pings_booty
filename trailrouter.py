@@ -39,13 +39,20 @@ def find(
         "avoid_unlit_streets": avoid_unlit,
         "hills_preference": hills_preference,
         "avoid_repetition": avoid_repetition,
-        "target_distance": target_distance,
         "roundtrip": roundtrip,
         "output": output
     }
 
+    if target_distance > 0:
+        current_target_distance = int(target_distance) # Explicitly cast to int
+        print(f"TrailRouter: target_distance type before API call: {type(current_target_distance)}, value: {current_target_distance}")
+        query["target_distance"] = current_target_distance
+
     rsp = rq.get(endpoint, params=query)
     
+    # Print the actual URL that was requested for debugging
+    print(f"TrailRouter API Request URL: {rsp.request.url}")
+
     if output in ["gpx", "kml"]:
         return rsp.text
     return rsp.json()
