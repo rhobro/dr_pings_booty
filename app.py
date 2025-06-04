@@ -36,6 +36,15 @@ def locate():
     inp = request.json
     attempt = inp["name"]
     return coord_py_to_http(geocode_place_name(attempt))
+
+@app.route("/routefmt", methods = ["POST"])
+def routefmt():
+    inp = request.json
+    start = coord_http_to_py(inp["start"])
+    end = coord_http_to_py(inp["end"])
+    fmt = inp["fmt"]  # json | gpx | kml
+    
+    return find([start, end], output=fmt)
     
 @app.route("/longroute", methods = ["POST"])
 def longroute():

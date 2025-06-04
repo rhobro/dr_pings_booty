@@ -66,4 +66,4 @@ for s in steps:
     if s["travel_mode"] == "TRANSIT":
         s = Transit(s)
         
-        if new
+        if newsteps
