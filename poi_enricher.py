@@ -259,7 +259,6 @@ def get_nearby_location_info(lat: float, lon: float, radius: int = 50) -> Dict[s
 
 def enrich_routes_with_location_info(
     route_locations: List[Union[tuple, str]],  # Can be coordinates or place names
-    output_file_path: str = "test_enriched.json",
     green_preference=0.0,
     target_distance=0.0,
     hills_preference=0.0,
@@ -267,11 +266,22 @@ def enrich_routes_with_location_info(
     avoid_unlit=False,
     avoid_repetition=False,
     roundtrip=False,
-    search_radius_m: int = 50  # Reduced default radius
+    search_radius_m: int = 50  # Radius for POI search
 ):
     """
-    Generates routes, enriches with popular POIs or road names, saves simplified output.
+    Generates routes, enriches with popular POIs or road names, saves to test.json.
     Accepts either coordinates (lat, lon) or place names as strings.
+    
+    Args:
+        route_locations: List of either coordinate tuples or place name strings
+        green_preference: Green space preference (0-1)
+        target_distance: Target distance in meters
+        hills_preference: Hills preference (-1 to 1) 
+        avoid_unsafe: Whether to avoid unsafe streets
+        avoid_unlit: Whether to avoid unlit streets
+        avoid_repetition: Whether to avoid repetitive routes
+        roundtrip: Whether to create a roundtrip
+        search_radius_m: Search radius for POIs in meters
     """
     
     # Convert place names to coordinates if needed
@@ -310,67 +320,78 @@ def enrich_routes_with_location_info(
     if not route_data or 'routes' not in route_data:
         print("No routes found or data from 'find' is not in expected format.")
         return
-
-    # Save raw route data to test.json (like trailrouter.py does)
-    with open("test.json", 'w') as f:
-        json.dump(route_data, f, indent=4)
-    print("Saved raw route data to 'test.json'")
-
-    final_routes_output = []
+    
     overall_summary_lines = []
 
-    for route_idx, original_route_info in enumerate(route_data.get('routes', [])):
-        print(f"\nProcessing route {route_idx + 1}...")
+    # Process each route
+    for route_idx, route_info in enumerate(route_data.get('routes', [])):
+        print(f"\n--- Processing Route {route_idx + 1} ---")
+        waypoints = route_info.get('waypoints', [])
         
-        original_waypoints = original_route_info.get('waypoints', [])
-        enriched_waypoints_for_this_route = []
-        route_summary = [f"Route {route_idx + 1} Summary:"]
+        enriched_waypoints = []
+        route_best_pois_summary = []
 
-        for wp_idx, waypoint_coords in enumerate(original_waypoints):
-            if len(waypoint_coords) >= 2:
-                lon, lat = waypoint_coords[0], waypoint_coords[1]
+        for wp_idx, waypoint in enumerate(waypoints):
+            if len(waypoint) >= 2:
+                lat, lon = waypoint[1], waypoint[0]  # waypoint format: [lon, lat, elevation]
+                elevation = waypoint[2] if len(waypoint) > 2 else None
                 
-                location_info = get_nearby_location_info(lat, lon, radius=search_radius_m)
+                print(f"  Waypoint {wp_idx + 1}: [{lon:.6f}, {lat:.6f}]")
                 
-                current_wp_output = {
-                    'coordinates': waypoint_coords,
-                    'nearby_pois': location_info['pois']
-                }
-                if location_info['road_name']:
-                    current_wp_output['road_name'] = location_info['road_name']
+                # Get POIs or road name
+                location_info = get_nearby_location_info(lat, lon, search_radius_m)
                 
-                enriched_waypoints_for_this_route.append(current_wp_output)
-
-                # Summary for console
-                wp_summary_line = f"  WP {wp_idx+1} ({lat:.4f}, {lon:.4f}): "
-                if location_info['pois']:
-                    closest_poi = location_info['pois'][0]
-                    wp_summary_line += f"{closest_poi['name']} ({closest_poi['type']}, {closest_poi['distance_m']}m)"
-                elif location_info['road_name']:
-                    wp_summary_line += f"Road: {location_info['road_name']}"
+                if location_info['pois']:  # Check if POIs list is not empty
+                    print(f"    Found {len(location_info['pois'])} popular POI(s)")
+                    # Keep only the best one for summary
+                    best_poi = location_info['pois'][0]
+                    route_best_pois_summary.append(f"  Waypoint {wp_idx + 1}: {best_poi['name']} ({best_poi['type']}, {best_poi['distance_m']:.0f}m)")
                 else:
-                    wp_summary_line += "No popular POIs or road name found."
-                route_summary.append(wp_summary_line)
-            
-        final_routes_output.append({"enriched_waypoints": enriched_waypoints_for_this_route})
-        overall_summary_lines.extend(route_summary)
-    
-    print("\n--- Location Info Summary ---")
-    for line in overall_summary_lines:
-        print(line)
+                    # Try to get road name as fallback
+                    road_name = location_info['road_name']
+                    if road_name:
+                        print(f"    No popular POIs found, using road name: {road_name}")
+                        location_info['pois'] = [{
+                            "name": f"Road: {road_name}",
+                            "type": "road",
+                            "distance_m": 0,
+                            "coordinates": [lon, lat]
+                        }]
+                        route_best_pois_summary.append(f"  Waypoint {wp_idx + 1}: Road: {road_name}")
+                    else:
+                        print(f"    No POIs or road name found")
+                
+                # Create enriched waypoint
+                enriched_waypoint = {
+                    "coordinates": waypoint,  # Keep original format [lon, lat, elevation]
+                    "nearby_pois": location_info['pois']
+                }
+                enriched_waypoints.append(enriched_waypoint)
+        
+        # Add enriched_waypoints directly to the route object
+        route_info['enriched_waypoints'] = enriched_waypoints
+        
+        # Store summary for printing
+        overall_summary_lines.append({
+            "route": route_idx + 1,
+            "best_pois_summary": route_best_pois_summary
+        })
 
-    simplified_output_data = {"routes": final_routes_output}
+    print("\n--- Best Named POIs Summary ---")
+    for route_summary in overall_summary_lines:
+        print(f"Route {route_summary['route']}:")
+        if route_summary['best_pois_summary']:
+            for summary_line in route_summary['best_pois_summary']:
+                print(summary_line)
+        else:
+            print("  No named POIs found for this route's waypoints.")
 
-    with open(output_file_path, 'w') as f:
-        json.dump(simplified_output_data, f, indent=4)
-    
-    print(f"\nEnriched {len(route_data.get('routes', []))} routes and saved to '{output_file_path}'!")
-
+    return route_data
 
 if __name__ == "__main__":
     # Example with place names instead of coordinates
     route_locations = [
-        "Imperial College London",  # Southeast London
+        "Huxley Building",  # Southeast London
         "North Acton, Ealing, London"  # West London
     ]
     
@@ -382,9 +403,9 @@ if __name__ == "__main__":
     
     enrich_routes_with_location_info(
         route_locations=route_locations,
-        output_file_path="test_enriched.json",
-        target_distance=20000, green_preference=1.0, hills_preference=1.0,
+        target_distance=20000,
+        green_preference=1.0, hills_preference=0.0,
         avoid_unsafe=True, avoid_unlit=True, avoid_repetition=True,
         roundtrip=False,
-        search_radius_m=40  # Smaller radius for more relevant results
+        search_radius_m=40
     ) 
