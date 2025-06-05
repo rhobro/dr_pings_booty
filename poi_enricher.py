@@ -143,6 +143,7 @@ def get_nearby_location_info(lat: float, lon: float, radius: int = 50) -> Dict[s
     """
     Get popular POIs or road name near a coordinate with better distance filtering.
     """
+    global overpass_last
     overpass_url = "http://overpass-api.de/api/interpreter"
     
     now = t()
