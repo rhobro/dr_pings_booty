@@ -4,10 +4,82 @@ import os
 from trailrouter import find
 from poi_enricher import *
 from flask_cors import CORS, cross_origin
+from math import floor
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+
+
+
+
+# V2
+
+AVERAGE_WALKING_SPEED = 4.8
+
+
+@app.route("/v2/route", methods = ["POST"])
+def route():
+    params = request.json
+    coords = params["coords"]
+    total_time = params["total_time_min"]
+    # speed = params["speed_kmph"]
+    speed = AVERAGE_WALKING_SPEED
+    fmt = params["fmt"] if "fmt" in params else "json"  # json|kml|gpx
+    
+    # calculations
+    total_dist = floor(speed * (total_time / 60) * 1000)
+    total_time_ms = total_time * 60 * 1000
+    
+    # ask
+    routes = find(
+        coords,
+        target_distance=total_dist,
+        output=fmt
+    )
+    
+    if fmt != "json":
+        return routes
+    
+    # json
+    routes = routes["routes"]
+    # select closest under total time
+    selected = routes[0]
+    for r in routes[1:]:
+        if selected["duration"] < r["duration"] <= total_time_ms:
+            selected = r
+            
+    return clean_route(selected)
+    
+            
+    
+def clean_route(r):
+    return {
+        "distance": r["distance"],
+        "duration": r["duration"],
+        "ascent": r["ascent"],
+        "descent": r["descent"],
+        "points": [conv_coord(c) for c in r["geometry"]["coordinates"]],
+        # "waypoints": [conv_coord(c) for c in r["waypoints"]]
+        # green score?
+    }
+    
+def conv_coord(c):
+    return {
+        "lat": c[1],
+        "long": c[0],
+        "height": c[2],
+    }
+
+
+
+
+# V1
+
+
+
+
 
 def coord_http_to_py(s):
     return (s["lat"], s["long"])

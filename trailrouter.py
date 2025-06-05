@@ -32,7 +32,7 @@ def find(
 
     endpoint = "https://trailrouter.com/ors/experimentalroutes"
     query = {
-        "coordinates": "|".join([f"{lon},{lat}" for (lat, lon) in route]),
+        "coordinates": "|".join([f"{c['long']},{c['lat']}" for c in route]),
         # "skip_segments": None, TODO impl
         "green_preference": green_preference,
         "avoid_unsafe_streets": avoid_unsafe,
@@ -59,10 +59,10 @@ def find(
 
 
 route = [
-    (51.5225787916085, -0.2584538182768499),
-    (51.49052175066264, -0.2063941502918089),
-    (51.49902674764006, -0.17958657749433424),
-    (51.4988469085482, -0.13938348407508253)
+    {"lat": 51.5225787916085, "long": -0.2584538182768499},
+    {"lat": 51.49052175066264, "long": -0.2063941502918089},
+    {"lat": 51.49902674764006, "long": -0.17958657749433424},
+    {"lat": 51.4988469085482, "long": -0.13938348407508253}
 ]
 with open("test.json", "w") as f:
-    f.write(json.dumps(find(route, 1, 20000, 1, True, True, True, False, "json"), indent=4))
+    f.write(json.dumps(find(route, 1, 25000, 1, True, True, True, False, "json"), indent=4))
