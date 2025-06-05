@@ -3,3 +3,4 @@ gunicorn
 requests
 googlemaps
 polyline
+flask_cors
