@@ -135,22 +135,23 @@ def get_road_name_from_nominatim(lat: float, lon: float) -> Optional[str]:
     except Exception as e:
         print(f"Nominatim API error for {lat}, {lon}: {e}")
         return None
-    
-overpass_last = 0
-overpass_min_interval = 0.1
 
 def get_nearby_location_info(lat: float, lon: float, radius: int = 50) -> Dict[str, Any]:
     """
     Get popular POIs or road name near a coordinate with better distance filtering.
     """
-    global overpass_last
+    # Use function attributes to store state (cleaner than globals)
+    if not hasattr(get_nearby_location_info, 'last_call_time'):
+        get_nearby_location_info.last_call_time = 0
+    
     overpass_url = "http://overpass-api.de/api/interpreter"
+    min_interval = 0.1
     
     now = t()
-    since = now - overpass_last
-    if since < overpass_min_interval:
-        sleep(overpass_min_interval - since)
-    overpass_last = now
+    since = now - get_nearby_location_info.last_call_time
+    if since < min_interval:
+        sleep(min_interval - since)
+    get_nearby_location_info.last_call_time = t()  # Update after sleep
     
     # More targeted query focusing on transport and significant POIs
     overpass_query = f"""
