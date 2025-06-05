@@ -42,9 +42,10 @@ def routefmt():
     inp = request.json
     start = coord_http_to_py(inp["start"])
     end = coord_http_to_py(inp["end"])
+    total_time = inp["total_time"]
     fmt = inp["fmt"]  # json | gpx | kml
     
-    return find([start, end], output=fmt)
+    return find([start, end], total_time=total_time, output=fmt)
     
 @app.route("/longroute", methods = ["POST"])
 def longroute():
