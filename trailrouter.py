@@ -58,11 +58,11 @@ def find(
     return rsp.json()
 
 
-route = [
-    {"lat": 51.5225787916085, "long": -0.2584538182768499},
-    {"lat": 51.49052175066264, "long": -0.2063941502918089},
-    {"lat": 51.49902674764006, "long": -0.17958657749433424},
-    {"lat": 51.4988469085482, "long": -0.13938348407508253}
-]
-with open("test.json", "w") as f:
-    f.write(json.dumps(find(route, 1, 25000, 1, True, True, True, False, "json"), indent=4))
+# route = [
+#     {"lat": 51.5225787916085, "long": -0.2584538182768499},
+#     {"lat": 51.49052175066264, "long": -0.2063941502918089},
+#     {"lat": 51.49902674764006, "long": -0.17958657749433424},
+#     {"lat": 51.4988469085482, "long": -0.13938348407508253}
+# ]
+# with open("test.json", "w") as f:
+#     f.write(json.dumps(find(route, 1, 25000, 1, True, True, True, False, "json"), indent=4))
