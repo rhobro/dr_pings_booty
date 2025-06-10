@@ -1,0 +1,421 @@
+[
+    {
+        "bounds": {
+            "northeast": {
+                "lat": 51.4993456,
+                "lng": -0.1788227
+            },
+            "southwest": {
+                "lat": 51.491257,
+                "lng": -0.2078256
+            }
+        },
+        "copyrights": "Powered by Google, \u00a92025 Google",
+        "fare": {
+            "currency": "GBP",
+            "text": "\u00a31.75",
+            "value": 1.75
+        },
+        "legs": [
+            {
+                "arrival_time": {
+                    "text": "4:43\u202fAM",
+                    "time_zone": "Europe/London",
+                    "value": 1749527022
+                },
+                "departure_time": {
+                    "text": "4:21\u202fAM",
+                    "time_zone": "Europe/London",
+                    "value": 1749525692
+                },
+                "distance": {
+                    "text": "2.7 km",
+                    "value": 2706
+                },
+                "duration": {
+                    "text": "22 mins",
+                    "value": 1330
+                },
+                "end_address": "Imperial College / Queens Gate Terrace (Stop RT), South Kensington, London SW7 2RH, UK",
+                "end_location": {
+                    "lat": 51.4993456,
+                    "lng": -0.1796857
+                },
+                "start_address": "2 Gwendwr Rd, London W14 9BG, UK",
+                "start_location": {
+                    "lat": 51.4913956,
+                    "lng": -0.2078256
+                },
+                "steps": [
+                    {
+                        "distance": {
+                            "text": "0.8 km",
+                            "value": 769
+                        },
+                        "duration": {
+                            "text": "11 mins",
+                            "value": 683
+                        },
+                        "end_location": {
+                            "lat": 51.4932638,
+                            "lng": -0.1995936
+                        },
+                        "html_instructions": "Walk to West Cromwell Road / Tesco (Stop D)",
+                        "polyline": {
+                            "points": "g|gyH|qg@Ba@@MB_@?K@OUFC@K@QBS@Q@OEGKAAA?A@?ACI?G?AFAHDK@AO@QH[b@sA\\kA\\eABITQDMCIGe@Ga@E]Io@AKAWCUC]AUAMEs@ASKmBGgAEa@AKCYAEGWESEQIYGUGYEMCKGSGMKUKMMSOSQKKOMMKOCCEAOGGAc@Cf@IBSEGCNUSIg@So@Oc@S{@"
+                        },
+                        "start_location": {
+                            "lat": 51.4913956,
+                            "lng": -0.2078256
+                        },
+                        "steps": [
+                            {
+                                "distance": {
+                                    "text": "44 m",
+                                    "value": 44
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 36
+                                },
+                                "end_location": {
+                                    "lat": 51.4913393,
+                                    "lng": -0.2072933
+                                },
+                                "html_instructions": "Head <b>east</b> on <b>Gunterstone Rd</b> toward <b>Gwendwr Rd</b>",
+                                "polyline": {
+                                    "points": "g|gyH|qg@Ba@@MB_@?K@O"
+                                },
+                                "start_location": {
+                                    "lat": 51.4913956,
+                                    "lng": -0.2078256
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "54 m",
+                                    "value": 54
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 45
+                                },
+                                "end_location": {
+                                    "lat": 51.491894,
+                                    "lng": -0.2072065
+                                },
+                                "html_instructions": "Turn <b>left</b> onto <b>North End Rd</b>/<wbr/><b>B317</b>",
+                                "maneuver": "turn-left",
+                                "polyline": {
+                                    "points": "{{gyHpng@UFC@K@QBS@Q@OEGKAAA?A@?ACI?G?AFAHD"
+                                },
+                                "start_location": {
+                                    "lat": 51.4913393,
+                                    "lng": -0.2072933
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "4 m",
+                                    "value": 4
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 24
+                                },
+                                "end_location": {
+                                    "lat": 51.491894,
+                                    "lng": -0.2072065
+                                },
+                                "html_instructions": "Cross the road",
+                                "polyline": {
+                                    "points": "i_hyH`ng@"
+                                },
+                                "start_location": {
+                                    "lat": 51.491894,
+                                    "lng": -0.2072065
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "0.1 km",
+                                    "value": 148
+                                },
+                                "duration": {
+                                    "text": "2 mins",
+                                    "value": 118
+                                },
+                                "end_location": {
+                                    "lat": 51.491257,
+                                    "lng": -0.2055527
+                                },
+                                "html_instructions": "Turn <b>left</b> onto <b>Edith Villas</b>",
+                                "maneuver": "turn-left",
+                                "polyline": {
+                                    "points": "i_hyH`ng@K@AO@QH[b@sA\\kA\\eABITQDM"
+                                },
+                                "start_location": {
+                                    "lat": 51.491894,
+                                    "lng": -0.2072065
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "0.4 km",
+                                    "value": 374
+                                },
+                                "duration": {
+                                    "text": "5 mins",
+                                    "value": 306
+                                },
+                                "end_location": {
+                                    "lat": 51.492663,
+                                    "lng": -0.2007977
+                                },
+                                "html_instructions": "Turn <b>left</b> onto <b>W Cromwell Rd</b>/<wbr/><b>A4</b>",
+                                "maneuver": "turn-left",
+                                "polyline": {
+                                    "points": "k{gyHtcg@CIGe@Ga@E]Io@AKAWCUC]AUAMEs@ASKmBGgAEa@AKCYAEGWESEQIYGUGYEMCKGSGMKUKMMSOSQKKOMMKOCC"
+                                },
+                                "start_location": {
+                                    "lat": 51.491257,
+                                    "lng": -0.2055527
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "43 m",
+                                    "value": 43
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 33
+                                },
+                                "end_location": {
+                                    "lat": 51.4929865,
+                                    "lng": -0.2007158
+                                },
+                                "html_instructions": "Slight <b>left</b> toward <b>Warwick Rd</b>/<wbr/><b>A3220</b>",
+                                "maneuver": "turn-slight-left",
+                                "polyline": {
+                                    "points": "cdhyH~ef@EAOGGAc@C"
+                                },
+                                "start_location": {
+                                    "lat": 51.492663,
+                                    "lng": -0.2007977
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "25 m",
+                                    "value": 25
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 33
+                                },
+                                "end_location": {
+                                    "lat": 51.4927748,
+                                    "lng": -0.2005714
+                                },
+                                "html_instructions": "Turn <b>right</b> onto <b>Warwick Rd</b>/<wbr/><b>A3220</b>",
+                                "maneuver": "turn-right",
+                                "polyline": {
+                                    "points": "efhyHnef@f@IBS"
+                                },
+                                "start_location": {
+                                    "lat": 51.4929865,
+                                    "lng": -0.2007158
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "77 m",
+                                    "value": 77
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 88
+                                },
+                                "end_location": {
+                                    "lat": 51.4932638,
+                                    "lng": -0.1995936
+                                },
+                                "html_instructions": "Turn <b>left</b> onto <b>W Cromwell Rd</b>/<wbr/><b>A4</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+                                "maneuver": "turn-left",
+                                "polyline": {
+                                    "points": "ydhyHpdf@EGCNUSIg@So@Oc@S{@"
+                                },
+                                "start_location": {
+                                    "lat": 51.4927748,
+                                    "lng": -0.2005714
+                                },
+                                "travel_mode": "WALKING"
+                            }
+                        ],
+                        "travel_mode": "WALKING"
+                    },
+                    {
+                        "distance": {
+                            "text": "1.4 km",
+                            "value": 1433
+                        },
+                        "duration": {
+                            "text": "4 mins",
+                            "value": 240
+                        },
+                        "end_location": {
+                            "lat": 51.49535969999999,
+                            "lng": -0.1797908
+                        },
+                        "html_instructions": "Bus towards Baker Street",
+                        "polyline": {
+                            "points": "_hhyHr~e@JMKc@Qq@Om@EOOi@Kc@Sy@[iAQm@I]CEGYOo@Ok@e@{BI]I[UiAIg@Ee@Eg@Ak@?AAi@AkAAiAEsB?OE{DBuA@m@@eA?e@@cA@q@HiDB}C?Q?[@W?Y@S?AFYEeAE{@?GCe@As@Cq@Em@CeAAWEwACq@Cs@A_@A_@GkA?CE}ACm@Cw@GQAC?A?SA]CY?G?GEiA?CKmDEqAE}@G}BEo@I@"
+                        },
+                        "start_location": {
+                            "lat": 51.493283,
+                            "lng": -0.1996162
+                        },
+                        "transit_details": {
+                            "arrival_stop": {
+                                "location": {
+                                    "lat": 51.49535969999999,
+                                    "lng": -0.1797908
+                                },
+                                "name": "Natural History Museum /Queens Gate (Stop GL)"
+                            },
+                            "arrival_time": {
+                                "text": "4:36\u202fAM",
+                                "time_zone": "Europe/London",
+                                "value": 1749526585
+                            },
+                            "departure_stop": {
+                                "location": {
+                                    "lat": 51.493283,
+                                    "lng": -0.1996162
+                                },
+                                "name": "West Cromwell Road / Tesco (Stop D)"
+                            },
+                            "departure_time": {
+                                "text": "4:32\u202fAM",
+                                "time_zone": "Europe/London",
+                                "value": 1749526376
+                            },
+                            "headsign": "Baker Street",
+                            "line": {
+                                "agencies": [
+                                    {
+                                        "name": "Transport for London",
+                                        "url": "https://tfl.gov.uk/modes/tube/"
+                                    }
+                                ],
+                                "color": "#ce312d",
+                                "name": "Roehampton - Baker Street",
+                                "short_name": "N74",
+                                "text_color": "#ffffff",
+                                "url": "https://tfl.gov.uk/",
+                                "vehicle": {
+                                    "icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png",
+                                    "local_icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/uk-london-bus.png",
+                                    "name": "Bus",
+                                    "type": "BUS"
+                                }
+                            },
+                            "num_stops": 4
+                        },
+                        "travel_mode": "TRANSIT"
+                    },
+                    {
+                        "distance": {
+                            "text": "0.5 km",
+                            "value": 504
+                        },
+                        "duration": {
+                            "text": "7 mins",
+                            "value": 437
+                        },
+                        "end_location": {
+                            "lat": 51.4993456,
+                            "lng": -0.1796857
+                        },
+                        "html_instructions": "Walk to Imperial College / Queens Gate Terrace (Stop RT), South Kensington, London SW7 2RH, UK",
+                        "polyline": {
+                            "points": "_uhyHvbb@A_@AYAQAU?QAGYDA[\\EAKI@A[?EG@QDO@YDMBcALQ@_@DK@UDM@[DIBSBQHICkBTMBQFQBM?MB_CXG@YFUFE?aAN"
+                        },
+                        "start_location": {
+                            "lat": 51.4953569,
+                            "lng": -0.1797992
+                        },
+                        "steps": [
+                            {
+                                "distance": {
+                                    "text": "61 m",
+                                    "value": 61
+                                },
+                                "duration": {
+                                    "text": "1 min",
+                                    "value": 60
+                                },
+                                "end_location": {
+                                    "lat": 51.4954678,
+                                    "lng": -0.1788227
+                                },
+                                "html_instructions": "Head <b>east</b> on <b>Cromwell Rd</b>/<wbr/><b>A4</b> toward <b>Queen's Gate</b>",
+                                "polyline": {
+                                    "points": "_uhyHvbb@A_@AYAQAU?QAGYDA[\\EAKI@A[?E"
+                                },
+                                "start_location": {
+                                    "lat": 51.4953569,
+                                    "lng": -0.1797992
+                                },
+                                "travel_mode": "WALKING"
+                            },
+                            {
+                                "distance": {
+                                    "text": "0.4 km",
+                                    "value": 443
+                                },
+                                "duration": {
+                                    "text": "6 mins",
+                                    "value": 377
+                                },
+                                "end_location": {
+                                    "lat": 51.4993456,
+                                    "lng": -0.1796857
+                                },
+                                "html_instructions": "Turn <b>left</b> onto <b>Queen's Gate</b><div style=\"font-size:0.9em\">Destination will be on the right</div>",
+                                "maneuver": "turn-left",
+                                "polyline": {
+                                    "points": "uuhyHr|a@G@QDO@YDMBcALQ@_@DK@UDM@[DIBSBQHICkBTMBQFQBM?MB_CXG@YFUFE?aAN"
+                                },
+                                "start_location": {
+                                    "lat": 51.4954678,
+                                    "lng": -0.1788227
+                                },
+                                "travel_mode": "WALKING"
+                            }
+                        ],
+                        "travel_mode": "WALKING"
+                    }
+                ],
+                "traffic_speed_entry": [],
+                "via_waypoint": []
+            }
+        ],
+        "overview_polyline": {
+            "points": "g|gyH|qg@H{A@OUFOBe@DQ@OEIMC@CUFAHDK@AOJm@`A_D`@oATQDMKo@M_AK{@Em@MuB[kFOcA]uAYgASc@Ya@OSQKY]OSUIk@Ef@IBSEGCNUSIg@c@sAS{@CDJMKc@a@_Bu@wC{@{CmAqFSy@_@qBKmAAm@KsHEkEDcCDaFP}LFYEeAEcAOyD_@gLMgEIU?UEgAWmIM{DEo@I@A]Ck@Ag@AGYDA[\\EAKI@Aa@YF{BX{C^QHICyBXc@J[BgCZo@NgAN"
+        },
+        "summary": "",
+        "warnings": [
+            "Walking directions are in beta. Use caution \u2013 This route may be missing sidewalks or pedestrian paths."
+        ],
+        "waypoint_order": []
+    }
+]

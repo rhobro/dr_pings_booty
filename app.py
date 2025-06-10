@@ -5,11 +5,119 @@ from trailrouter import find
 from poi_enricher import *
 from flask_cors import CORS, cross_origin
 from math import floor
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import datetime as dt
+from bson import json_util
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+uri = "mongodb+srv://rm1723:axxXQHZZVHnusQv0@cluster0.amex0j3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client.get_database("thyme")
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+    
+    
+    
+# v3
+
+@app.route("/v3/route", methods = ["GET", "POST"])
+def new_route():
+    if request.method == "GET":
+        return get_routes()
+    
+    params = request.json
+    start = params["start"]
+    end = params["end"]
+    new = {
+        "start": start,
+        "end": end,
+        "when": dt.datetime.now(dt.timezone.utc),
+    }
+    
+    coll = db.get_collection("routes")
+    coll.insert_one(new)
+    
+    return ""
+    
+
+def get_routes():
+    coll = db.get_collection("routes")
+    rs = coll.find(None, ["start", "end"]).sort("when", -1).limit(10)
+    
+    return json_util.dumps(list(rs), indent=4)
+
+
+@app.route("/v3/journey", methods = ["POST"])
+def new_journey():
+    params = request.json
+    duration = params["duration"]
+    distance = params["distance"]
+    plant = params["plant"]  # str name
+    green_score = params["green_score"]  # float
+    completed = params["completed"]  # bool
+    new = {
+        "duration": duration,
+        "distance": distance,
+        "plant": plant,
+        "green_score": green_score,
+        "completed": completed,
+        "when": dt.datetime.now(dt.timezone.utc),
+    }
+    
+    coll = db.get_collection("journeys")
+    coll.insert_one(new)
+    
+    return ""
+    
+    
+@app.route("/v3/stats")
+def stats():
+    cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=7)
+    coll = db.get_collection("journeys")
+    recent = coll.find({"when": {"$gte": cutoff}})
+    
+    t_dur = 0
+    t_dist = 0
+    plants = {}
+    avg_green = 0
+    completed = 0
+    n = 0
+    
+    for j in recent:
+        t_dur += j.get("duration", 0)
+        t_dist += j.get("distance", 0)
+        
+        plant = j.get("plant")
+        if plant not in plants:
+            plants[plant] = 1
+        else:
+            plants[plant] += 1
+        
+        avg_green = (n * avg_green + j.get("green_score", 0)) / (n + 1)
+        
+        completed += j.get("completed", False)
+        
+        n += 1
+    
+    return {
+        "total_duration": t_dur,
+        "total_distance": t_dist,
+        "plants": plants,
+        "avg_green": avg_green,
+        "n_completed": completed,
+        "n_total": n
+    }
 
 
 

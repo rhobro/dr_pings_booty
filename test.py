@@ -1,5 +1,6 @@
 import googlemaps as maps
 from polyline import decode
+import json
 
 KEY = "AIzaSyB1Mhqz0NlzTycRp0tTfQIJoexp9_rWQiA"
 START = (51.49142612816029, -0.20781661388698155)
@@ -12,6 +13,8 @@ def coord_to_gm(coord):
 cli = maps.Client(key=KEY)
 
 output = cli.directions(coord_to_gm(START), coord_to_gm(END), mode="transit")
+with open("gm.json", "w") as f:
+    f.write(json.dumps(output, indent=4))
 route = output[0]
 decoded_poly = decode(route["overview_polyline"]["points"], precision=6)
 
@@ -45,10 +48,19 @@ class Walk:
         
 class Transit:
     def __init__(self, raw):
-        self.distance = s["distance"]["value"]
-        self.duration = s["duration"]["value"]
-        self.points = full_points(s)
-        self.line = s["transit_details"]["line"]["name"]
+        self.type = raw["transit_details"]["line"]["vehicle"]["type"]
+        self.distance = raw["distance"]["value"]
+        self.duration = raw["duration"]["value"]
+        self.points = full_points(raw)
+        self.line = raw["transit_details"]["line"]["name"]
+        self.start_name = raw["transit_details"]["departure_stop"]["name"]
+        self.end_name = raw["transit_details"]["arrival_stop"]["name"]
+    
+    def append(self, other):
+        self.distance += other.distance
+        self.duration += other.duration
+        self.points.extend(other.points)
+        
 
 
 # summarise 
@@ -58,12 +70,15 @@ for s in steps:
     if s["travel_mode"] == "WALKING":
         s = Walk(s)
         
-        if newsteps[-1] is Walk:
+        if type(newsteps[-1]) == Walk:
             newsteps[-1].append(s)
         else:
             newsteps.append(s)
             
-    if s["travel_mode"] == "TRANSIT":
+    elif s["travel_mode"] == "TRANSIT":
         s = Transit(s)
         
-        if newsteps
+        if type(newsteps[-1]) == Transit and newsteps[-1].type == s.type:
+            newsteps[-1].append(s)
+        else:
+            newtypes.append(s)
