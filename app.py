@@ -144,6 +144,11 @@ def route():
     routes = find(
         coords,
         target_distance=total_dist,
+        hills_preference=params.get("hills", 0.6),
+        avoid_repetition=params.get("avoid_repetition", True),
+        avoid_unlit=params.get("avoid_unlit", False),
+        avoid_unsafe=params.get("avoid_unsafe", False),
+        roundtrip=params.get("roundtrip", False),
         output=fmt
     )
     
