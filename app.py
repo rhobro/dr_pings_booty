@@ -144,7 +144,7 @@ def route():
     routes = find(
         coords,
         target_distance=total_dist,
-        green_preference=params.get("green_preference", 1),
+        green_preference=params.get("green_preference", 0),
         hills_preference=params.get("hills", 0),
         avoid_repetition=params.get("avoid_repetition", True),
         avoid_unlit=params.get("avoid_unlit", False),
