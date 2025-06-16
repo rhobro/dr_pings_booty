@@ -58,8 +58,12 @@ def get_routes():
     return json_util.dumps(list(rs), indent=4)
 
 
-@app.route("/v3/journey", methods = ["POST"])
-def new_journey():
+@app.route("/v3/journey", methods = ["GET", "POST"])
+def journey():
+    if request.method == "GET":
+        return get_journeys()
+    
+    # Your existing POST code
     params = request.json
     duration = params["duration"]
     distance = params["distance"]
@@ -79,6 +83,11 @@ def new_journey():
     coll.insert_one(new)
     
     return ""
+
+def get_journeys():
+    coll = db.get_collection("journeys")
+    journeys = coll.find(None).sort("when", -1).limit(10)  # Latest 10 journeys
+    return json_util.dumps(list(journeys), indent=4)
     
     
 @app.route("/v3/stats")
